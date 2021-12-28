@@ -6,3 +6,9 @@ v.1.0:
 - car asset (standard unity asset with script);
 - textures;
 - camera stabilizator.
+
+v.1.1:
+- checkpoints system;
+- finish line;
+- time panel;
+- directional arrow.
