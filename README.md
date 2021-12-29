@@ -12,3 +12,7 @@ v.1.1:
 - finish line;
 - time panel;
 - directional arrow.
+
+v.1.2:
+- calculating Lap Time;
+- calculating Best Time.
