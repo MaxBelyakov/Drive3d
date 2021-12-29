@@ -7,16 +7,16 @@ using UnityEngine;
 
 public class CheckPointsList : MonoBehaviour {
 
-    private static GameObject cp0;
+    public static GameObject cp0;
     private static GameObject cp1;
     private static GameObject cp2;
     public static int n;
     public static List<GameObject> CheckPoints;
 
     void Start() {
-        cp0 = GameObject.Find("cp0");
         cp1 = GameObject.Find("cp1");
         cp2 = GameObject.Find("cp2");
+        cp0 = GameObject.Find("cp0");
         FillCheckPointsList();
     }
 
@@ -24,9 +24,9 @@ public class CheckPointsList : MonoBehaviour {
     public static void FillCheckPointsList() {
         n = 0;
         CheckPoints = new List<GameObject>();
-        CheckPoints.Add(cp0);
         CheckPoints.Add(cp1);
         CheckPoints.Add(cp2);
+        CheckPoints.Add(cp0);
 
         for (int i = 0; i < CheckPoints.Count; i++) {
             CheckPoints[i].SetActive(false);

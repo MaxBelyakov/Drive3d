@@ -870,7 +870,7 @@ GameObject:
   - component: {fileID: 720424541}
   - component: {fileID: 720424540}
   m_Layer: 5
-  m_Name: BestMinText
+  m_Name: BestTimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -916,7 +916,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: 00:00.0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -979,7 +979,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -61.760788, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1193,6 +1193,7 @@ GameObject:
   - component: {fileID: 1049147247}
   - component: {fileID: 1049147249}
   - component: {fileID: 1049147248}
+  - component: {fileID: 1049147250}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1263,6 +1264,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1049147246}
   m_CullTransparentMesh: 1
+--- !u!114 &1049147250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049147246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eaa611ebe1b83549a474d522e610614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeText: {fileID: 1521758640}
+  BestTime: {fileID: 720424540}
 --- !u!1 &1225216770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1638,7 +1653,7 @@ GameObject:
   - component: {fileID: 1521758641}
   - component: {fileID: 1521758640}
   m_Layer: 5
-  m_Name: MinText
+  m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1661,8 +1676,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 104.9025, y: -15}
-  m_SizeDelta: {x: 24.805, y: 25}
+  m_AnchoredPosition: {x: 138.49762, y: -15}
+  m_SizeDelta: {x: 91.9952, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1521758640
 MonoBehaviour:
@@ -1684,7 +1699,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: 00:00.0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
