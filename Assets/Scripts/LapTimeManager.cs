@@ -23,7 +23,7 @@ public class LapTimeManager : MonoBehaviour {
 
     void Update() {
 
-        if (Checkpoints.finish) {
+        if (CheckPointsList.player_finish) {
             // Compare Lap Time with the best time
             sum = minutes * 60 * 10 + seconds * 10 + (int) m_seconds;
             best_sum = best_minutes * 60 * 10 + best_seconds * 10 + (int) best_m_seconds;
@@ -39,7 +39,7 @@ public class LapTimeManager : MonoBehaviour {
             seconds = 0;
             m_seconds = 0;
 
-            Checkpoints.finish = false;
+            CheckPointsList.player_finish = false;
         }
 
         // Calculating Lap Time

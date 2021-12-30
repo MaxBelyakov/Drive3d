@@ -7,30 +7,26 @@ using UnityEngine;
 
 public class CheckPointsList : MonoBehaviour {
 
-    public static GameObject cp0;
-    private static GameObject cp1;
-    private static GameObject cp2;
-    public static int n;
+    public GameObject cp0;
+    public GameObject cp1;
+    public GameObject cp2;
     public static List<GameObject> CheckPoints;
 
-    void Start() {
-        cp1 = GameObject.Find("cp1");
-        cp2 = GameObject.Find("cp2");
-        cp0 = GameObject.Find("cp0");
-        FillCheckPointsList();
-    }
+    public static GameObject enemy_target;
 
-    /* Fill the List by Checkpoints objects and deactivate it, instead finish line */
-    public static void FillCheckPointsList() {
-        n = 0;
+    public static bool player_finish = false;
+    public static bool enemy_finish = false;
+
+    public static int n = 0;
+    public static int m = 0;
+
+    void Start() {
         CheckPoints = new List<GameObject>();
         CheckPoints.Add(cp1);
         CheckPoints.Add(cp2);
         CheckPoints.Add(cp0);
 
-        for (int i = 0; i < CheckPoints.Count; i++) {
-            CheckPoints[i].SetActive(false);
-        }
-        CheckPoints[0].SetActive(true);
+        enemy_target = GameObject.Find("enemy_target");
+        enemy_target.transform.position = CheckPoints[0].transform.position;
     }
 }
