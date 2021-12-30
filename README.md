@@ -16,3 +16,8 @@ v.1.1:
 v.1.2:
 - calculating Lap Time;
 - calculating Best Time.
+
+v.1.3:
+- 3-2-1 counter;
+- enemy car;
+- enemy car moving by checkpoints.
