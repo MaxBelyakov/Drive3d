@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -33,7 +34,7 @@ namespace UnityStandardAssets.Vehicles.Car
         [SerializeField] private float m_LateralWanderSpeed = 0.1f;                               // how fast the lateral wandering will fluctuate
         [SerializeField] [Range(0, 1)] private float m_AccelWanderAmount = 0.1f;                  // how much the cars acceleration will wander
         [SerializeField] private float m_AccelWanderSpeed = 0.1f;                                 // how fast the cars acceleration wandering will fluctuate
-        [SerializeField] private BrakeCondition m_BrakeCondition = BrakeCondition.TargetDistance; // what should the AI consider when accelerating/braking?
+        [SerializeField] private BrakeCondition m_BrakeCondition = BrakeCondition.TargetDirectionDifference; // what should the AI consider when accelerating/braking?
         [SerializeField] private bool m_Driving;                                                  // whether the AI is currently actively driving or stopped.
         [SerializeField] private Transform m_Target;                                              // 'target' the target object to aim for.
         [SerializeField] private bool m_StopWhenTargetReached;                                    // should we stop driving when we reach the target?
@@ -46,6 +47,15 @@ namespace UnityStandardAssets.Vehicles.Car
         private float m_AvoidPathOffset;          // direction (-1 or 1) in which to offset path to avoid other car, whilst avoiding
         private Rigidbody m_Rigidbody;
 
+        private float accel;  // Acceleration variable
+
+        // Car "get stuck" variables
+        private float t_pos_x;              // Saved x position
+        private float t_pos_z;              // Saved z position
+        public static bool countdown;       // Updates by CountDownManager
+        private bool get_stuck;             // Car get stuck
+        private bool get_back;              // Car moving back
+        private int get_back_direction;     // Random back direction
 
         private void Awake()
         {
@@ -152,7 +162,7 @@ namespace UnityStandardAssets.Vehicles.Car
                                                   : m_AccelSensitivity;
 
                 // decide the actual amount of accel/brake input to achieve desired speed.
-                float accel = Mathf.Clamp((desiredSpeed - m_CarController.CurrentSpeed)*accelBrakeSensitivity, -1, 1);
+                accel = Mathf.Clamp((desiredSpeed - m_CarController.CurrentSpeed)*accelBrakeSensitivity, -1, 1);
 
                 // add acceleration 'wander', which also prevents AI from seeming too uniform and robotic in their driving
                 // i.e. increasing the accel wander amount can introduce jostling and bumps between AI cars in a race
@@ -168,8 +178,31 @@ namespace UnityStandardAssets.Vehicles.Car
                 // get the amount of steering needed to aim the car towards the target
                 float steer = Mathf.Clamp(targetAngle*m_SteerSensitivity, -1, 1)*Mathf.Sign(m_CarController.CurrentSpeed);
 
+                // Car can get stuck, check it
+                if (!countdown && !get_back && transform.position.x == t_pos_x && transform.position.z == t_pos_z) {
+                    get_stuck = true;
+
+                    // Set get back direction by random
+                    get_back_direction = Random.Range(-1, 1);
+                    if (get_back_direction == 0)
+                        get_back_direction = 1;
+                }
+
+                // Correct parameters to get back car when get stuck
+                if (get_stuck) {
+                    accel = accel * -1;
+                    steer = steer + 10f * get_back_direction;
+                    if (!get_back) {
+                        StartCoroutine(GetBack());
+                    }
+                }
+
                 // feed input to the car controller.
                 m_CarController.Move(steer, accel, accel, 0f);
+
+                // Save current position 
+                t_pos_x = transform.position.x;
+                t_pos_z = transform.position.z;
 
                 // if appropriate, stop driving when we're close enough to the target.
                 if (m_StopWhenTargetReached && localTarget.magnitude < m_ReachTargetThreshold)
@@ -177,6 +210,13 @@ namespace UnityStandardAssets.Vehicles.Car
                     m_Driving = false;
                 }
             }
+        }
+
+        IEnumerator GetBack() {
+            get_back = true;
+            yield return new WaitForSeconds(2f);
+            get_back = false;
+            get_stuck = false;
         }
 
 
