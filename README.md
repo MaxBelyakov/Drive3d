@@ -21,3 +21,9 @@ v.1.3:
 - 3-2-1 counter;
 - enemy car;
 - enemy car moving by checkpoints.
+
+v.1.4:
+- fix: freeze enemy car while countdown;
+- fix: slow down enemy car turning speed;
+- enemy car move back when get stuck;
+- player car is red, enemy car is black.
