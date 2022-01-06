@@ -13,7 +13,6 @@ public class CountDownManager : MonoBehaviour {
     public GameObject LapTimeManager;
     public GameObject Car;
     public GameObject Enemy;
-    public static bool countdown = true;
 
     void Start() {
         Car.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;

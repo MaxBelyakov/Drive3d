@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LapTimeManager : MonoBehaviour {
 
@@ -17,9 +18,13 @@ public class LapTimeManager : MonoBehaviour {
     
     public TMP_Text TimeText;
     public TMP_Text BestTime;
+    public TMP_Text Laps;
 
     private string s_0;
     private string m_0;
+
+    private int laps_current = 1;
+    private int laps_all = 3;  
 
     void Update() {
 
@@ -38,6 +43,16 @@ public class LapTimeManager : MonoBehaviour {
             minutes = 0;
             seconds = 0;
             m_seconds = 0;
+
+            // Next Lap
+            laps_current++;
+
+            // At the end of the game show statistics screen
+            if (laps_current > laps_all)
+                SceneManager.LoadScene("Statistics");
+            
+            // Update Lap text
+            Laps.text = laps_current + "/" + laps_all;
 
             CheckPointsList.player_finish = false;
         }
