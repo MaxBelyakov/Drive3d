@@ -27,3 +27,8 @@ v.1.4:
 - fix: slow down enemy car turning speed;
 - enemy car move back when get stuck;
 - player car is red, enemy car is black.
+
+v.1.5:
+- minimap render;
+- laps counter;
+- statistics screen after last lap finish.
