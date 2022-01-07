@@ -12,18 +12,18 @@ public class CountDownManager : MonoBehaviour {
     public AudioSource CountDownGoSound;
     public GameObject LapTimeManager;
     public GameObject Car;
-    public GameObject Enemy;
+    public GameObject BlackCar;
+    public GameObject BlueCar;
 
     void Start() {
+        LapTimeManager.SetActive(false);
         Car.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        Enemy.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        BlackCar.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        BlueCar.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         StartCoroutine(CountDownWaiter());
     }
 
     IEnumerator CountDownWaiter() {
-        // Send countdown trigger to enemy controller
-        CarAIControl.countdown = true;
-
         yield return new WaitForSeconds(0.5f);
         CountDownText.text = "3";
         CountDownSound.Play();
@@ -40,9 +40,11 @@ public class CountDownManager : MonoBehaviour {
         LapTimeManager.SetActive(true);
 
         Car.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        Enemy.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        BlackCar.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        BlueCar.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 
         yield return new WaitForSeconds(1f);
+        // Send countdown trigger to enemy controller
         CarAIControl.countdown = false;
     }
 }

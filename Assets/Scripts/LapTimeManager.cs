@@ -24,20 +24,15 @@ public class LapTimeManager : MonoBehaviour {
     private string m_0;
 
     private int laps_current = 1;
-    private int laps_all = 3;  
+    private int laps_all = 3;
+
+    private string best_time_car;
 
     void Update() {
 
         if (CheckPointsList.player_finish) {
-            // Compare Lap Time with the best time
-            sum = minutes * 60 * 10 + seconds * 10 + (int) m_seconds;
-            best_sum = best_minutes * 60 * 10 + best_seconds * 10 + (int) best_m_seconds;
-            if (best_sum == 0 || sum < best_sum) {
-                best_minutes = minutes;
-                best_seconds = seconds;
-                best_m_seconds = m_seconds;
-                BestTime.text = TimeText.text;
-            }
+
+            CheckBestTime("Player");
 
             // Restart Lap Time
             minutes = 0;
@@ -56,6 +51,13 @@ public class LapTimeManager : MonoBehaviour {
 
             CheckPointsList.player_finish = false;
         }
+
+        /*if (CheckPointsList.black_car_finish) {
+            CheckBestTime("Black car");
+        }
+        if (CheckPointsList.blue_car_finish) {
+            CheckBestTime("Blue car");
+        }*/
 
         // Calculating Lap Time
         m_seconds += Time.deltaTime * 10;
@@ -81,5 +83,23 @@ public class LapTimeManager : MonoBehaviour {
             m_0 = "";
         
         TimeText.text = m_0 + minutes + ":" + s_0 + seconds + "." + Mathf.Floor(m_seconds);
+    }
+
+    void CheckBestTime(string car_name) {
+        // Compare Lap Time with the best time
+        sum = minutes * 60 * 10 + seconds * 10 + (int) m_seconds;
+        best_sum = best_minutes * 60 * 10 + best_seconds * 10 + (int) best_m_seconds;
+
+        if (best_sum == 0 || sum < best_sum) {
+            best_minutes = minutes;
+            best_seconds = seconds;
+            best_m_seconds = m_seconds;
+
+            // Update Best time text
+            BestTime.text = TimeText.text;
+
+            // Save best time car name
+            best_time_car = car_name;
+        }
     }
 }

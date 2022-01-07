@@ -50,12 +50,12 @@ namespace UnityStandardAssets.Vehicles.Car
         private float accel;  // Acceleration variable
 
         // Car "get stuck" variables
-        private float t_pos_x;              // Saved x position
-        private float t_pos_z;              // Saved z position
-        public static bool countdown;       // Updates by CountDownManager
-        private bool get_stuck;             // Car get stuck
-        private bool get_back;              // Car moving back
-        private int get_back_direction;     // Random back direction
+        private float t_pos_x;                      // Saved x position
+        private float t_pos_z;                      // Saved z position
+        public static bool countdown = true;        // Updates by CountDownManager
+        private bool get_stuck;                     // Car get stuck
+        private bool get_back;                      // Car moving back
+        private int get_back_direction;             // Random back direction
 
         private void Awake()
         {
