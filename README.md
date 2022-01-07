@@ -32,3 +32,8 @@ v.1.5:
 - minimap render;
 - laps counter;
 - statistics screen after last lap finish.
+
+v.1.6:
+- fix: laptime freeze when countdown;
+- add second enemy car;
+- optimize check best time script.
