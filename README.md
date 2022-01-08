@@ -37,3 +37,9 @@ v.1.6:
 - fix: laptime freeze when countdown;
 - add second enemy car;
 - optimize check best time script.
+
+v.1.6.1:
+- fix check best time script;
+- lap counting for each car;
+- lap time counting for each car;
+- stop enemy cars when its finish game.
