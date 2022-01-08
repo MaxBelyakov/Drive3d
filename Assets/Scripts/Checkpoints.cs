@@ -47,7 +47,7 @@ public class Checkpoints : MonoBehaviour {
                     CheckPointsList.blue_car_finish = true;
                 }
                 // Show new target to Blue car
-                CheckPointsList.blue_car_target.transform.position = CheckPointsList.CheckPoints[CheckPointsList.k].transform.position;    
+                CheckPointsList.blue_car_target.transform.position = CheckPointsList.CheckPoints[CheckPointsList.k].transform.position;
             }
         }
     }
