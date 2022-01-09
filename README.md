@@ -43,3 +43,7 @@ v.1.6.1:
 - lap counting for each car;
 - lap time counting for each car;
 - stop enemy cars when its finish game.
+
+v.1.7:
+- statistics screen update;
+- rating system.
