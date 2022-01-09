@@ -20,7 +20,7 @@ public class CheckPointsList : MonoBehaviour {
     public static bool blue_car_finish = false;
 
     public static int n = 0;    // Player checkpoint counter
-    public static int m = 0;    // Red car checkpoint counter
+    public static int m = 0;    // Black car checkpoint counter
     public static int k = 0;    // Blue car checkpoint counter
 
     void Start() {

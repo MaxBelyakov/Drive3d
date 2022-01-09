@@ -29,15 +29,13 @@ public class LapTimeManager : MonoBehaviour {
     public GameObject BlackCar;
     public GameObject BlueCar;
 
-    private string s_0;
-    private string m_0;
+    public static int laps_current_player = 1;  // Current player lap value. Connected with Rating script 
+    public static int laps_current_black = 1;   // Current black car lap value. Connected with Rating script
+    public static int laps_current_blue = 1;    // Current blue car lap value. Connected with Rating script
+    private int laps_all = 3;                   // Laps in the race
 
-    private int laps_current_player = 1;
-    private int laps_current_black = 1;
-    private int laps_current_blue = 1;
-    private int laps_all = 3;
-
-    private string best_time_car;
+    public static string best_time_car;         // Best lap time car name. Connected with Statistics
+    public static string best_time_text;        // Best lap time. Connected with Statistics
 
     void Update() {
 
@@ -54,8 +52,10 @@ public class LapTimeManager : MonoBehaviour {
             laps_current_player++;
 
             // At the end of the game show statistics screen
-            if (laps_current_player > laps_all)
+            if (laps_current_player > laps_all) {
+                Rating.player_add_bonus = true;
                 SceneManager.LoadScene("Statistics");
+            }
             
             // Update Lap text
             Laps.text = laps_current_player + "/" + laps_all;
@@ -76,8 +76,10 @@ public class LapTimeManager : MonoBehaviour {
             laps_current_black++;
 
             // Car finished all laps
-            if (laps_current_black > laps_all)
+            if (laps_current_black > laps_all) {
                 BlackCar.GetComponent<CarAIControl>().m_Driving = false;
+                Rating.black_add_bonus = true;
+            }
 
             CheckPointsList.black_car_finish = false;
         }
@@ -95,8 +97,10 @@ public class LapTimeManager : MonoBehaviour {
             laps_current_blue++;
 
             // Car finished all laps
-            if (laps_current_blue > laps_all)
+            if (laps_current_blue > laps_all) {
                 BlueCar.GetComponent<CarAIControl>().m_Driving = false;
+                Rating.blue_add_bonus = true;
+            }
 
             CheckPointsList.blue_car_finish = false;
         }
@@ -134,17 +138,13 @@ public class LapTimeManager : MonoBehaviour {
             minutes_blue++;
         }
 
-        // Correct seconds text
+        // Correct seconds and minutes text
+        string s_0 = "";
+        string m_0 = "";
         if (seconds_player < 10)
             s_0 = "0";
-        else
-            s_0 = "";
-
-        // Correct minutes text
         if (minutes_player < 10)
             m_0 = "0";
-        else
-            m_0 = "";
         
         // Show player lap time text
         TimeText.text = m_0 + minutes_player + ":" + s_0 + seconds_player + "." + Mathf.Floor(m_seconds_player);
@@ -173,8 +173,9 @@ public class LapTimeManager : MonoBehaviour {
             // Update Best time text
             BestTime.text = best_m_0 + minutes + ":" + best_s_0 + seconds + "." + Mathf.Floor(m_seconds);
 
-            // Save best time car name
+            // Save best time and car name
             best_time_car = car_name;
+            best_time_text = BestTime.text;
         }
     }
 }
