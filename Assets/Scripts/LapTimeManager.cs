@@ -1,33 +1,34 @@
-/* Calculating Lap Time and Best Time in format 00:00.0 */
+/* Calculating Lap Time, Race Time and Best Time in format 00:00.0 */
 
 using UnityEngine;
 using TMPro;
+using System;
+using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityStandardAssets.Vehicles.Car;
 
 public class LapTimeManager : MonoBehaviour {
 
-    private float m_seconds_player;
-    private int seconds_player = 0;
-    private int minutes_player = 0;
-    private float m_seconds_black;
-    private int seconds_black = 0;
-    private int minutes_black = 0;
-    private float m_seconds_blue;
-    private int seconds_blue = 0;
-    private int minutes_blue = 0;
+    private float lap_time_player;
+    private float lap_time_black;
+    private float lap_time_blue;
 
-    private float best_m_seconds;
-    private int best_seconds = 0;
-    private int best_minutes = 0;
-    private int best_sum = 0;
+    private float best_lap_time = 0;
     
     public TMP_Text TimeText;
     public TMP_Text BestTime;
     public TMP_Text Laps;
+    public TMP_Text FinishText;
 
     public GameObject BlackCar;
     public GameObject BlueCar;
+
+    private float race_time_player = 0;
+    private float race_time_black = 0;
+    private float race_time_blue = 0;
+    public static string player_race_time_text; // Player race time text. Connected with Rating script
+    public static string black_race_time_text;  // Black car race time text. Connected with Rating script
+    public static string blue_race_time_text;   // Blue car race time text. Connected with Rating script
 
     public static int laps_current_player = 1;  // Current player lap value. Connected with Rating script 
     public static int laps_current_black = 1;   // Current black car lap value. Connected with Rating script
@@ -39,14 +40,12 @@ public class LapTimeManager : MonoBehaviour {
 
     void Update() {
 
-        if (CheckPointsList.player_finish) {
-
-            CheckBestTime("Player", m_seconds_player, seconds_player, minutes_player);
+        if (CheckPointsList.player_finish_lap) {
+            // Check is the lap time the best
+            CheckBestTime("Player", lap_time_player);
 
             // Restart Lap Time
-            minutes_player = 0;
-            seconds_player = 0;
-            m_seconds_player = 0;
+            lap_time_player = 0;
 
             // Next Lap
             laps_current_player++;
@@ -54,128 +53,108 @@ public class LapTimeManager : MonoBehaviour {
             // At the end of the game show statistics screen
             if (laps_current_player > laps_all) {
                 Rating.player_add_bonus = true;
-                SceneManager.LoadScene("Statistics");
+                player_race_time_text = PrintText(race_time_player);
+                FinishText.text = "FINISH";
+                StartCoroutine("waiter");
+            } else {
+                // Update Lap text
+                Laps.text = laps_current_player + "/" + laps_all;
             }
-            
-            // Update Lap text
-            Laps.text = laps_current_player + "/" + laps_all;
 
-            CheckPointsList.player_finish = false;
+            CheckPointsList.player_finish_lap = false;
         }
 
-        if (CheckPointsList.black_car_finish) {
-
-            CheckBestTime("Black car", m_seconds_black, seconds_black, minutes_black);
+        if (CheckPointsList.black_car_finish_lap) {
+            // Check is the lap time the best
+            CheckBestTime("Black car", lap_time_black);
 
             // Restart Lap Time
-            minutes_black = 0;
-            seconds_black = 0;
-            m_seconds_black = 0;
+            lap_time_black = 0;
 
             // Next Lap
             laps_current_black++;
 
             // Car finished all laps
             if (laps_current_black > laps_all) {
-                BlackCar.GetComponent<CarAIControl>().m_Driving = false;
+                BlackCar.GetComponent<CarAIControl>().m_Driving = false;    // Stop the car after finish
+                black_race_time_text = PrintText(race_time_black);
                 Rating.black_add_bonus = true;
             }
 
-            CheckPointsList.black_car_finish = false;
+            CheckPointsList.black_car_finish_lap = false;
         }
             
-        if (CheckPointsList.blue_car_finish) {
-
-            CheckBestTime("Blue car", m_seconds_blue, seconds_blue, minutes_blue);
+        if (CheckPointsList.blue_car_finish_lap) {
+            // Check is the lap time the best
+            CheckBestTime("Blue car", lap_time_blue);
 
             // Restart Lap Time
-            minutes_blue = 0;
-            seconds_blue = 0;
-            m_seconds_blue = 0;
+            lap_time_blue = 0;
 
             // Next Lap
             laps_current_blue++;
 
             // Car finished all laps
             if (laps_current_blue > laps_all) {
-                BlueCar.GetComponent<CarAIControl>().m_Driving = false;
+                BlueCar.GetComponent<CarAIControl>().m_Driving = false;     // Stop the car after finish
+                blue_race_time_text = PrintText(race_time_blue);
                 Rating.blue_add_bonus = true;
             }
 
-            CheckPointsList.blue_car_finish = false;
+            CheckPointsList.blue_car_finish_lap = false;
         }
             
         // Calculating Lap Time
-        m_seconds_player += Time.deltaTime * 10;
-        m_seconds_black += Time.deltaTime * 10;
-        m_seconds_blue += Time.deltaTime * 10;
+        lap_time_player += Time.deltaTime * 10;
+        lap_time_black += Time.deltaTime * 10;
+        lap_time_blue += Time.deltaTime * 10;
 
-        // Calculating seconds
-        if (m_seconds_player >= 10) {
-            m_seconds_player = 0;
-            seconds_player++;
-        }
-        if (m_seconds_black >= 10) {
-            m_seconds_black = 0;
-            seconds_black++;
-        }
-        if (m_seconds_blue >= 10) {
-            m_seconds_blue = 0;
-            seconds_blue++;
-        }
+        // Calculating Race Time
+        race_time_player += Time.deltaTime * 10;
+        race_time_black += Time.deltaTime * 10;
+        race_time_blue += Time.deltaTime * 10;
 
-        // Calculating minutes
-        if (seconds_player >= 60) {
-            seconds_player = 0;
-            minutes_player++;
+        // Show lap time text. Check for race finish text
+        if (player_race_time_text == null)
+            TimeText.text = PrintText(lap_time_player);
+
+    }
+
+    void CheckBestTime(string car_name, float lap_time) {
+        // Compare Lap Time with the best time
+        if (best_lap_time == 0 || lap_time < best_lap_time) {
+            // Save new best time
+            best_lap_time = lap_time;
+
+            // Update Best time text
+            BestTime.text = PrintText(best_lap_time);
+
+            // Save best time text and car name for Statistics
+            best_time_car = car_name;
+            best_time_text = BestTime.text;
         }
-        if (seconds_black >= 60) {
-            seconds_black = 0;
-            minutes_black++;
-        }
-        if (seconds_blue >= 60) {
-            seconds_blue = 0;
-            minutes_blue++;
-        }
+    }
+
+    // Convert time in m.seconds to 00:00:0 format and return it as string
+    string PrintText(float time) {
+        var min = Math.Truncate(time/600);
+        var sec = Math.Truncate((time - min * 600) / 10);
+        var m_sec = (int) (time - min * 600 - sec * 10);
 
         // Correct seconds and minutes text
         string s_0 = "";
         string m_0 = "";
-        if (seconds_player < 10)
+        if (sec < 10)
             s_0 = "0";
-        if (minutes_player < 10)
+        if (min < 10)
             m_0 = "0";
-        
-        // Show player lap time text
-        TimeText.text = m_0 + minutes_player + ":" + s_0 + seconds_player + "." + Mathf.Floor(m_seconds_player);
 
+        return m_0 + min.ToString() + ":" + s_0 + sec.ToString() + ":" + m_sec.ToString();
     }
 
-    void CheckBestTime(string car_name, float m_seconds, int seconds, int minutes) {
-        // Compare Lap Time with the best time
-        var sum = minutes * 60 * 10 + seconds * 10 + (int) m_seconds;
-        best_sum = best_minutes * 60 * 10 + best_seconds * 10 + (int) best_m_seconds;
-
-        if (best_sum == 0 || sum < best_sum) {
-            best_minutes = minutes;
-            best_seconds = seconds;
-            best_m_seconds = m_seconds;
-
-            string best_s_0 = "";
-            string best_m_0 = "";
-
-            // Correct seconds and minutes text
-            if (best_seconds < 10)
-                best_s_0 = "0";
-            if (best_minutes < 10)
-                best_m_0 = "0";
-
-            // Update Best time text
-            BestTime.text = best_m_0 + minutes + ":" + best_s_0 + seconds + "." + Mathf.Floor(m_seconds);
-
-            // Save best time and car name
-            best_time_car = car_name;
-            best_time_text = BestTime.text;
-        }
+    // Wait before show Statistics screen
+    IEnumerator waiter() {
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("Statistics");
     }
 }

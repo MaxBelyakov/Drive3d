@@ -16,7 +16,7 @@ public class Checkpoints : MonoBehaviour {
                     CheckPointsList.n++;
                 else {
                     CheckPointsList.n = 0;
-                    CheckPointsList.player_finish = true;
+                    CheckPointsList.player_finish_lap = true;
                 }      
             }
         }
@@ -29,7 +29,7 @@ public class Checkpoints : MonoBehaviour {
                     CheckPointsList.m++;
                 else {
                     CheckPointsList.m = 0;
-                    CheckPointsList.black_car_finish = true;
+                    CheckPointsList.black_car_finish_lap = true;
                 }
                 // Show new target to Red car
                 CheckPointsList.black_car_target.transform.position = CheckPointsList.CheckPoints[CheckPointsList.m].transform.position;    
@@ -44,7 +44,7 @@ public class Checkpoints : MonoBehaviour {
                     CheckPointsList.k++;
                 else {
                     CheckPointsList.k = 0;
-                    CheckPointsList.blue_car_finish = true;
+                    CheckPointsList.blue_car_finish_lap = true;
                 }
                 // Show new target to Blue car
                 CheckPointsList.blue_car_target.transform.position = CheckPointsList.CheckPoints[CheckPointsList.k].transform.position;

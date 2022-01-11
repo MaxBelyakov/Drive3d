@@ -15,9 +15,9 @@ public class CheckPointsList : MonoBehaviour {
     public static GameObject black_car_target;
     public static GameObject blue_car_target;
 
-    public static bool player_finish = false;
-    public static bool black_car_finish = false;
-    public static bool blue_car_finish = false;
+    public static bool player_finish_lap = false;
+    public static bool black_car_finish_lap = false;
+    public static bool blue_car_finish_lap = false;
 
     public static int n = 0;    // Player checkpoint counter
     public static int m = 0;    // Black car checkpoint counter

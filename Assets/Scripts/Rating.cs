@@ -5,8 +5,9 @@ using System.Collections.Generic;
 
 // Collect car rating statistics
 public class CarRating {
-    public string Name { get; set; }
-    public float Rating { get; set; }
+    public string Name { get; set; }        // Car name
+    public float Rating { get; set; }       // Car rating
+    public string race_time { get; set; }   // Car race time
 }
 
 // Calculate rating
@@ -19,7 +20,6 @@ public class Rating : MonoBehaviour {
     public TMP_Text text_1st;
     public TMP_Text text_2nd;
     public TMP_Text text_3rd;
-
     
     public static bool player_add_bonus;    // Add bonus to player. Connected with LapTimeManager
     public static bool black_add_bonus;     // Add bonus to black car. Connected with LapTimeManager
@@ -72,22 +72,24 @@ public class Rating : MonoBehaviour {
         black_rating += black_bonus;
         blue_rating += blue_bonus;
 
-        // Fill the CarRating class by cars and rating values
+        // Fill the CarRating class by cars, rating values and race time
         List<CarRating> rating = new List<CarRating>() {
-            new CarRating() { Name = "Player", Rating = player_rating },
-            new CarRating() { Name = "Black car", Rating = black_rating },
-            new CarRating() { Name = "Blue car", Rating = blue_rating }        
+            new CarRating() { Name = "Player", Rating = player_rating, race_time = LapTimeManager.player_race_time_text },
+            new CarRating() { Name = "Black car", Rating = black_rating, race_time = LapTimeManager.black_race_time_text },
+            new CarRating() { Name = "Blue car", Rating = blue_rating, race_time = LapTimeManager.blue_race_time_text }        
         };
 
-        // Sort rating by amount of points
+        // Sort rating by amount of points. 1st car has the biggest amount of points
         List<CarRating> rating_sorted = rating.OrderBy(x => x.Rating).ToList();
 
-        // 1st car has the biggest amount of points
-        place_1 = rating_sorted[2].Name;
-        place_2 = rating_sorted[1].Name;
-        place_3 = rating_sorted[0].Name;
-        text_1st.text = place_1;
-        text_2nd.text = place_2;
-        text_3rd.text = place_3;
+        // Save car names and race time by number of place for Statistics
+        place_1 = rating_sorted[2].Name + " (" + rating_sorted[2].race_time + ")";
+        place_2 = rating_sorted[1].Name + " (" + rating_sorted[1].race_time + ")";
+        place_3 = rating_sorted[0].Name + " (" + rating_sorted[0].race_time + ")";
+
+        // Show rating in race
+        text_1st.text = rating_sorted[2].Name;
+        text_2nd.text = rating_sorted[1].Name;
+        text_3rd.text = rating_sorted[0].Name;
     }
 }
