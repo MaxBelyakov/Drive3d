@@ -45,5 +45,9 @@ v.1.6.1:
 - stop enemy cars when its finish game.
 
 v.1.7:
-- statistics screen update;
+- statistics screen visual update;
 - rating system.
+
+v.1.7.1:
+- show cars race time in statistics;
+- optimize lap time manager script (change logic of calculation).
