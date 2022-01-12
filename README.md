@@ -51,3 +51,8 @@ v.1.7:
 v.1.7.1:
 - show cars race time in statistics;
 - optimize lap time manager script (change logic of calculation).
+
+v.1.8:
+- minimap car markers;
+- car markers stabilizator;
+- clear and optimize camera stabilizator script.
