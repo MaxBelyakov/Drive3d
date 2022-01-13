@@ -56,3 +56,14 @@ v.1.8:
 - minimap car markers;
 - car markers stabilizator;
 - clear and optimize camera stabilizator script.
+
+v.1.9:
+- fix: move enemy cars targets relatively each other;
+- fix: change enemy behavior to never break, because of bug in AI script;
+- fix: add extra divider to checkpoint rating variable, because of rating bug when checkpoint become more than 10;
+- blinking checkpoint markers on minimap;
+- new track checkpoints, full race circle;
+- optimize checkpoint list script, collect all checkpoints in list that fills in unity inspector;
+- disable directional arrow;
+- improve finish checkpoint prefab, join it with checkpoint collider;
+- improve checkpoint prefab, add identification columns at the edges.
