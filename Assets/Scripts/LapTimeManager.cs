@@ -20,6 +20,7 @@ public class LapTimeManager : MonoBehaviour {
     public TMP_Text Laps;
     public TMP_Text FinishText;
 
+    public GameObject PlayerCar;
     public GameObject BlackCar;
     public GameObject BlueCar;
 
@@ -39,6 +40,7 @@ public class LapTimeManager : MonoBehaviour {
     public static string best_time_text;        // Best lap time. Connected with Statistics
 
     void Update() {
+        Debug.Log(PlayerCar.GetComponent<CarController>().CurrentSpeed);
 
         if (CheckPointsList.player_finish_lap) {
             // Check is the lap time the best

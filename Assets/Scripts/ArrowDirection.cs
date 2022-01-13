@@ -7,7 +7,7 @@ public class ArrowDirection : MonoBehaviour {
     private GameObject target;
 
     void Update() {
-        target = CheckPointsList.CheckPoints[CheckPointsList.n];
+        target = CheckPointsList.s_checkPoints[CheckPointsList.n];
         transform.LookAt(target.transform);
     }
 }

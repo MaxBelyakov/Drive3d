@@ -55,17 +55,17 @@ public class Rating : MonoBehaviour {
         }
 
         // Calculate distance between car and target for each car
-        float player_target_distance = Vector3.Distance(player_car.transform.position, CheckPointsList.CheckPoints[CheckPointsList.n].transform.position);
-        float black_target_distance = Vector3.Distance(black_car.transform.position, CheckPointsList.CheckPoints[CheckPointsList.m].transform.position);
-        float blue_target_distance = Vector3.Distance(blue_car.transform.position, CheckPointsList.CheckPoints[CheckPointsList.k].transform.position);
+        float player_target_distance = Vector3.Distance(player_car.transform.position, CheckPointsList.s_checkPoints[CheckPointsList.n].transform.position);
+        float black_target_distance = Vector3.Distance(black_car.transform.position, CheckPointsList.s_checkPoints[CheckPointsList.m].transform.position);
+        float blue_target_distance = Vector3.Distance(blue_car.transform.position, CheckPointsList.s_checkPoints[CheckPointsList.k].transform.position);
 
         // Calculate rating points
         // First point is amount of finished laps (1p for each)
         // Second point is amount of finished checkpoints in current lap (0.1p for each)
         // Third point is distance to current target. The biggest number is near the target (0.000001p for each distance point)
-        float player_rating = LapTimeManager.laps_current_player + CheckPointsList.n / 10f + (10000f - player_target_distance) / 1000000f;
-        float black_rating = LapTimeManager.laps_current_black + CheckPointsList.m / 10f + (10000f - black_target_distance) / 1000000f;
-        float blue_rating = LapTimeManager.laps_current_blue + CheckPointsList.k / 10f + (10000f - blue_target_distance) / 1000000f;
+        float player_rating = LapTimeManager.laps_current_player + CheckPointsList.n / 100f + (10000f - player_target_distance) / 1000000f;
+        float black_rating = LapTimeManager.laps_current_black + CheckPointsList.m / 100f + (10000f - black_target_distance) / 1000000f;
+        float blue_rating = LapTimeManager.laps_current_blue + CheckPointsList.k / 100f + (10000f - blue_target_distance) / 1000000f;
 
         // Add bonus to car rating
         player_rating += player_bonus;

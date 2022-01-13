@@ -7,10 +7,8 @@ using UnityEngine;
 
 public class CheckPointsList : MonoBehaviour {
 
-    public GameObject cp0;
-    public GameObject cp1;
-    public GameObject cp2;
-    public static List<GameObject> CheckPoints;
+    public static List<GameObject> s_checkPoints;
+    public List<GameObject> checkPointsInspector;
 
     public static GameObject black_car_target;
     public static GameObject blue_car_target;
@@ -24,15 +22,18 @@ public class CheckPointsList : MonoBehaviour {
     public static int k = 0;    // Blue car checkpoint counter
 
     void Start() {
-        CheckPoints = new List<GameObject>();
-        CheckPoints.Add(cp1);
-        CheckPoints.Add(cp2);
-        CheckPoints.Add(cp0);
+        // Get checkpoints list from unity inspector
+        s_checkPoints = checkPointsInspector;
 
+        // Enable 1st checkpoint marker
+        s_checkPoints[n].GetComponentInChildren<CheckPointMarkerController>().enabled = true;
+
+        // Set Black car target 1st checkpoint
         black_car_target = GameObject.Find("black_car_target");
-        black_car_target.transform.position = CheckPoints[0].transform.position;
+        black_car_target.transform.position = s_checkPoints[0].transform.position + new Vector3(0, 0, 5f);
 
+        // Set Blue car target 1st checkpoint
         blue_car_target = GameObject.Find("blue_car_target");
-        blue_car_target.transform.position = CheckPoints[0].transform.position;
+        blue_car_target.transform.position = s_checkPoints[0].transform.position - new Vector3(0, 0, 5f);
     }
 }
