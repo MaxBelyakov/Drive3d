@@ -67,3 +67,11 @@ v.1.9:
 - disable directional arrow;
 - improve finish checkpoint prefab, join it with checkpoint collider;
 - improve checkpoint prefab, add identification columns at the edges.
+
+v.2.0 (release):
+- fix: audio noise;
+- fix: upgrade car control (fix car settings variables, delete never break option);
+- fix: bug enemy car breaks after one of checkpoints, it depends on target direction;
+- fix: wide checkpoint marker to best view on minimap, increase speed of marker flash;
+- show player car speed;
+- upgrade enemy moving back script to avoid repeat get stuck.
