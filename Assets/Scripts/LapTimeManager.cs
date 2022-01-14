@@ -19,6 +19,7 @@ public class LapTimeManager : MonoBehaviour {
     public TMP_Text BestTime;
     public TMP_Text Laps;
     public TMP_Text FinishText;
+    public TMP_Text SpeedText;
 
     public GameObject PlayerCar;
     public GameObject BlackCar;
@@ -40,7 +41,7 @@ public class LapTimeManager : MonoBehaviour {
     public static string best_time_text;        // Best lap time. Connected with Statistics
 
     void Update() {
-        Debug.Log(PlayerCar.GetComponent<CarController>().CurrentSpeed);
+        SpeedText.text = Math.Round(PlayerCar.GetComponent<CarController>().CurrentSpeed * 1.609f) + " km/h";
 
         if (CheckPointsList.player_finish_lap) {
             // Check is the lap time the best

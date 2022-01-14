@@ -17,12 +17,12 @@ public class CheckPointMarkerController : MonoBehaviour {
 
     IEnumerator Waiter() {
         waiter = true;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
 
         // Hide marker
         this.GetComponent<MeshRenderer>().enabled = false;
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         waiter = false;
     }
 }
